@@ -2,17 +2,17 @@
 
 Pulse allows you to easily write healthchecks for your application and display a simple, aggregated report so you can quickly diagnose whether and why your app is having trouble (or whether you can blame someone else). You can also monitor your healthchecks with [nagios](http://www.nagios.org/), [zabbix](http://www.zabbix.com/), etc.
 
-[![Latest Stable Version](http://poser.pugx.org/ilyaplot/pulse/v)](https://packagist.org/packages/ilyaplot/pulse) 
-[![Total Downloads](http://poser.pugx.org/ilyaplot/pulse/downloads)](https://packagist.org/packages/ilyaplot/pulse) 
-[![Latest Unstable Version](http://poser.pugx.org/ilyaplot/pulse/v/unstable)](https://packagist.org/packages/ilyaplot/pulse) 
-[![License](http://poser.pugx.org/ilyaplot/pulse/license)](https://packagist.org/packages/ilyaplot/pulse) 
-[![PHP Version Require](http://poser.pugx.org/ilyaplot/pulse/require/php)](https://packagist.org/packages/ilyaplot/pulse)
+![Packagist Version](https://img.shields.io/packagist/v/ilyaplot/pulse?label=release&style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/ilyaplot/pulse?style=plastic)
 [![Code Coverage](https://codecov.io/gh/ilyaplot/pulse/branch/master/graph/badge.svg)](https://codecov.io/gh/ilyaplot/pulse)
 [![Type Coverage](https://shepherd.dev/github/ilyaplot/pulse/coverage.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 [![Static Analysis](https://github.com/ilyaplot/pulse/workflows/static%20analysis/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22static+analysis%22)
 [![Unit Tests](https://github.com/ilyaplot/pulse/workflows/tests/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22tests%22)
 [![Psalm Level](https://shepherd.dev/github/ilyaplot/pulse/level.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 [![Style CI](https://github.styleci.io/repos/605941101/shield?style=plastic)](https://github.styleci.io/repos/605941101)
+![PHP Version](https://img.shields.io/packagist/dependency-v/ilyaplot/pulse/php?style=plastic)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ilyaplot/pulse?style=plastic)
+
 #### Wait, what's a healthcheck?
 
 Healthchecks are a great way to test system health and connectivity to other services. For example, you can verify connectivity to memcache or mysql, that your app can read / write to certain files, or that your API key for a third-party service is still working.
