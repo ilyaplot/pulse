@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use ilyaplot\pulse\formatters\PlainTextFormatter;
 use ilyaplot\pulse\LevelEnum;
 use ilyaplot\pulse\ResultDto;
 use ilyaplot\pulse\RuleResultDto;
