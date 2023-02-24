@@ -42,3 +42,34 @@ http_response_code($result->isSuccess ? 200 : 503);
  * @see example-output.html
  */
 echo $html . PHP_EOL;
+
+// Or you may return the result as JSON:
+
+echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
+
+/*
+ *  Output:
+{
+    "isSuccess": false,
+    "rules": [
+        {
+            "isSuccess": true,
+            "description": "File exists",
+            "level": "critical",
+            "errorMessage": null
+        },
+        {
+            "isSuccess": false,
+            "description": "Directory exists",
+            "level": "warning",
+            "errorMessage": "\/Users\/plotnikov\/workspace\/pulse\/examples\/http-usage.php is not a directory"
+        },
+        {
+            "isSuccess": false,
+            "description": "Custom rule",
+            "level": "critical",
+            "errorMessage": null
+        }
+    ]
+}
+ */

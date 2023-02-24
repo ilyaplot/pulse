@@ -1,0 +1,41 @@
+{
+    "isSuccess": false,
+    "rules": [
+        {
+            "isSuccess": true,
+            "description": "Rule 1",
+            "level": "info",
+            "errorMessage": null
+        },
+        {
+            "isSuccess": true,
+            "description": "Rule 2",
+            "level": "warning",
+            "errorMessage": "Test"
+        },
+        {
+            "isSuccess": true,
+            "description": "Rule 3",
+            "level": "critical",
+            "errorMessage": null
+        },
+        {
+            "isSuccess": false,
+            "description": "Rule 4",
+            "level": "info",
+            "errorMessage": null
+        },
+        {
+            "isSuccess": false,
+            "description": "Rule 5",
+            "level": "warning",
+            "errorMessage": "Test"
+        },
+        {
+            "isSuccess": false,
+            "description": "Rule 6",
+            "level": "critical",
+            "errorMessage": null
+        }
+    ]
+}
