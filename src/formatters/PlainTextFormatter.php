@@ -14,7 +14,7 @@ class PlainTextFormatter
     {
         $lines = array_map(
             fn(RuleResultDto $ruleResultDto) => $this->formatResult($ruleResultDto),
-            $resultDto->rules,
+            $resultDto->checks,
         );
 
         $result = implode(PHP_EOL, $lines);

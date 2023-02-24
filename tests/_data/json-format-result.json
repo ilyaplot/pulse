@@ -1,6 +1,6 @@
 {
-    "healthy": false,
-    "healthchecks": [
+    "isSuccess": false,
+    "checks": [
         {
             "isSuccess": true,
             "description": "Rule 1",
@@ -37,7 +37,5 @@
             "level": "critical",
             "errorMessage": null
         }
-    ],
-    "critical": 1,
-    "warnings": 1
+    ]
 }

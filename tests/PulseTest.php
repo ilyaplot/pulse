@@ -90,8 +90,8 @@ class PulseTest extends TestCase
 
         $resultDto = $this->pulse->run();
 
-        self::assertEquals(LevelEnum::info, $resultDto->rules[0]->level);
-        self::assertEquals(LevelEnum::info, $resultDto->rules[1]->level);
+        self::assertEquals(LevelEnum::info, $resultDto->checks[0]->level);
+        self::assertEquals(LevelEnum::info, $resultDto->checks[1]->level);
     }
 
     public function testAddWarning(): void
@@ -109,8 +109,8 @@ class PulseTest extends TestCase
 
         $resultDto = $this->pulse->run();
 
-        self::assertEquals(LevelEnum::warning, $resultDto->rules[0]->level);
-        self::assertEquals(LevelEnum::warning, $resultDto->rules[1]->level);
+        self::assertEquals(LevelEnum::warning, $resultDto->checks[0]->level);
+        self::assertEquals(LevelEnum::warning, $resultDto->checks[1]->level);
     }
 
     public function testAddCritical(): void
@@ -127,8 +127,8 @@ class PulseTest extends TestCase
 
         $resultDto = $this->pulse->run();
 
-        self::assertEquals(LevelEnum::critical, $resultDto->rules[0]->level);
-        self::assertEquals(LevelEnum::critical, $resultDto->rules[1]->level);
+        self::assertEquals(LevelEnum::critical, $resultDto->checks[0]->level);
+        self::assertEquals(LevelEnum::critical, $resultDto->checks[1]->level);
     }
 
     public function testConfiguredInstance(): void

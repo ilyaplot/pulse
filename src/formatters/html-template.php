@@ -74,7 +74,7 @@ use ilyaplot\pulse\ResultDto;
 <body>
 <div id="wrapper">
     <ul>
-        <?php foreach ($resultDto->rules as $result) : ?>
+        <?php foreach ($resultDto->checks as $result) : ?>
             <li class="healthcheck <?= $formatter->getLevelClass($result->level) ?> <?= $result->isSuccess ? 'pass' : 'fail' ?>">
                 <?= htmlentities($result->description) ?>
                 (<?= $formatter->getLevelString($result->level) ?>):

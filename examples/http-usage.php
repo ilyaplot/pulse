@@ -50,8 +50,8 @@ echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
 /*
  *  Output:
 {
-    "healthy": false,
-    "healthchecks": [
+    "isSuccess": false,
+    "checks": [
         {
             "isSuccess": true,
             "description": "File exists",
@@ -70,8 +70,6 @@ echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
             "level": "critical",
             "errorMessage": null
         }
-    ],
-    "critical": 1,
-    "warnings": 1
+    ]
 }
  */

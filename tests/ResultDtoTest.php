@@ -54,51 +54,7 @@ class ResultDtoTest extends TestCase
             ]
         );
 
-        $arrayResult = [
-            'healthy' => false,
-            'healthchecks' => [
-                new RuleResultDto(
-                    true,
-                    'Rule 1',
-                    LevelEnum::info,
-                    null
-                ),
-                new RuleResultDto(
-                    true,
-                    'Rule 2',
-                    LevelEnum::warning,
-                    'Test'
-                ),
-                new RuleResultDto(
-                    true,
-                    'Rule 3',
-                    LevelEnum::critical,
-                ),
-                new RuleResultDto(
-                    false,
-                    'Rule 4',
-                    LevelEnum::info,
-                    null
-                ),
-                new RuleResultDto(
-                    false,
-                    'Rule 5',
-                    LevelEnum::warning,
-                    'Test'
-                ),
-                new RuleResultDto(
-                    false,
-                    'Rule 6',
-                    LevelEnum::critical,
-                ),
-            ],
-            'critical' => 1,
-            'warnings' => 1,
-        ];
-
-        self::assertEquals($arrayResult, $result->jsonSerialize());
-
-        $actualResult = file_get_contents(__DIR__ . '/_data/json-format-result.txt');
+        $actualResult = file_get_contents(__DIR__ . '/_data/json-format-result.json');
         self::assertEquals(json_encode($result, JSON_PRETTY_PRINT), $actualResult);
     }
 }

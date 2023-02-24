@@ -4,37 +4,15 @@ declare(strict_types=1);
 
 namespace ilyaplot\pulse;
 
-use JsonSerializable;
-
-final class ResultDto implements JsonSerializable
+final class ResultDto
 {
     /**
      * @param bool $isSuccess
-     * @param RuleResultDto[] $rules
+     * @param RuleResultDto[] $checks
      */
     public function __construct(
         public readonly bool $isSuccess,
-        public readonly array $rules,
+        public readonly array $checks,
     ) {
-    }
-
-    public function jsonSerialize(): array
-    {
-        $critical = count(array_filter(
-            $this->rules,
-            fn(RuleResultDto $rule) => !$rule->isSuccess && $rule->level === LevelEnum::critical
-        ));
-
-        $warnings = count(array_filter(
-            $this->rules,
-            fn(RuleResultDto $rule) => !$rule->isSuccess && $rule->level === LevelEnum::warning
-        ));
-
-        return [
-            'healthy' => $this->isSuccess,
-            'healthchecks' => $this->rules,
-            'critical' => $critical,
-            'warnings' => $warnings,
-        ];
     }
 }
