@@ -34,21 +34,24 @@ $pulse = new ilyaplot\pulse\Pulse();
 $pulse->add(new FileRule(
     '/path/to/your/config/file',
     checkIsReadable: true,
-    "Check that config file is readable",
+    description: "Check that config file is readable",
 ));
 
 include '/path/to/your/config/file';
 
-$pulse->addCritical(new ClosureRule(function() use ($config) {
-	$memcache = new Memcache();
-	if(!$memcache->connect($config['memcache_host'], $config['memcache_port'])){
-		return false;
-	}
-	$key = 'healthcheck_test_key'
-	$msg = 'memcache is working';
-	$memcache->set($key, $msg);
-	return $memcache->get($key) === $msg;
-}, "Check memcache connectivity");
+$pulse->addCritical(new ClosureRule(
+    function() use ($config) {
+        $memcache = new Memcache();
+        if(!$memcache->connect($config['memcache_host'], $config['memcache_port'])){
+            return false;
+        }
+        $key = 'healthcheck_test_key'
+        $msg = 'memcache is working';
+        $memcache->set($key, $msg);
+        return $memcache->get($key) === $msg;
+    }, 
+    "Check memcache connectivity")
+);
 ```
 
 #### Warnings
@@ -71,10 +74,13 @@ $pulse->addInfo(new ClosureRule(
     "Verify connectivity to youtube", 
 );
 
-$pulse->addInfo(new ClosureRule("Today is", function(ClosureRule $closureRule) {
-    $this->setErrorMessage('Today is ' . date('l'));
-	return false;
-});
+$pulse->addInfo(new ClosureRule(
+    function(ClosureRule $closureRule) {
+        $this->setErrorMessage('Today is ' . date('l'));
+        return false;
+    }, 
+    "Today is",
+));
 
 $result = $pulse->run();
 ```
