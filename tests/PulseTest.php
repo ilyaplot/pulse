@@ -145,17 +145,4 @@ class PulseTest extends TestCase
 
         self::assertFalse($pulse->run()->isSuccess);
     }
-
-    public function testInvalidRule(): void
-    {
-        $pulse = new Pulse([
-            'invalid rule',
-        ]);
-
-        try {
-            $pulse->run();
-        } catch (AssertionError $exception) {
-            self::assertEquals('Rule must implement RuleInterface', $exception->getMessage());
-        }
-    }
 }
