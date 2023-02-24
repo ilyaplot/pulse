@@ -9,7 +9,7 @@ use ilyaplot\pulse\RuleResultDto;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \ilyaplot\pulse\HtmlFormatter
+ * @covers \ilyaplot\pulse\formatters\HtmlFormatter
  */
 class HtmlFormatterTest extends TestCase
 {
