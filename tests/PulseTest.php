@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
-use ilyaplot\pulse\Healthcheck;
+use ilyaplot\pulse\LevelEnum;
 use ilyaplot\pulse\Pulse;
+use ilyaplot\pulse\rules\ClosureRule;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \ilyaplot\pulse\Pulse
  */
-class PulseTest extends PHPUnit\Framework\TestCase
+class PulseTest extends TestCase
 {
+    /** @psalm-suppress PropertyNotSetInConstructor */
     private Pulse $pulse;
 
     protected function setUp(): void
@@ -17,59 +20,115 @@ class PulseTest extends PHPUnit\Framework\TestCase
         $this->pulse = new Pulse();
     }
 
-    public function testBasicUsage()
+    public function testEmptyRules(): void
     {
-        // Dynamically add a new healthcheck
-        $this->pulse->add('Test that this file exists', fn() => file_exists(__FILE__));
-
-        // Add a healtcheck we created manually
-        $healthcheck = new Healthcheck('description', fn() => true);
-        $this->pulse->addHealthcheck($healthcheck);
-
-        // Verify healthcheck aggregate is passing up to this point
-        self::assertTrue($this->pulse->getStatus());
-
-        // Add a failing healthcheck
-        $this->pulse->add('falsy', function () {
-            return false;
-        });
-
-        // Verify healthcheck aggregate is failing now
-        self::assertFalse($this->pulse->getStatus());
+        self::assertTrue($this->pulse->run()->isSuccess, 'Empty rules should be ok');
     }
 
     /**
-     * @uses \ilyaplot\pulse\Pulse
+     * @uses \ilyaplot\pulse\rules\ClosureRule
      */
-    public function testTypes()
+    public function testInfo(): void
     {
-        $this->pulse->addWarning('Test explicit warning', fn() => false);
+        $this->pulse->add(new ClosureRule(
+            fn() => false,
+            'Info rule',
+            LevelEnum::info,
+        ));
 
-        $this->pulse->addInfo('Output some info', fn() => 'Testing!');
+        self::assertTrue($this->pulse->run()->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::warning)->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::critical)->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::info)->isSuccess);
+    }
 
-        self::assertEquals(
-            true,
-            $this->pulse->getStatus(),
-            'No critical failures, summary should pass'
-        );
+    /**
+     * @uses \ilyaplot\pulse\rules\ClosureRule
+     */
+    public function testWarning(): void
+    {
+        $this->pulse->add(new ClosureRule(
+            fn() => false,
+            'Warning rule',
+            LevelEnum::warning,
+        ));
 
-        $this->pulse->add('Test default (warning)', fn() => false);
+        self::assertTrue($this->pulse->run()->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::warning)->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::critical)->isSuccess);
+        self::assertFalse($this->pulse->run(LevelEnum::info)->isSuccess);
+    }
 
-        $this->pulse->addCritical('Test critical failure', fn() => false);
+    /**
+     * @uses \ilyaplot\pulse\rules\ClosureRule
+     */
+    public function testCritical(): void
+    {
+        $this->pulse->add(new ClosureRule(
+            fn() => false,
+            'Critical rule',
+            LevelEnum::critical,
+        ));
 
-        // At this point we have one critical failure so the check should fail
-        self::assertEquals(
-            false,
-            $this->pulse->getStatus(),
-            'One critical failure, summary should fail'
-        );
+        self::assertFalse($this->pulse->run()->isSuccess);
+        self::assertFalse($this->pulse->run(LevelEnum::warning)->isSuccess);
+        self::assertTrue($this->pulse->run(LevelEnum::critical)->isSuccess);
+        self::assertFalse($this->pulse->run(LevelEnum::info)->isSuccess);
+    }
 
+    public function testAddInfo(): void
+    {
+        $this->pulse->addInfo(new ClosureRule(
+            fn() => false,
+            'Info rule',
+        ));
 
-        $array = $this->pulse->getHealthChecks();
+        $this->pulse->addInfo(new ClosureRule(
+            fn() => false,
+            'Info rule',
+            LevelEnum::warning,
+        ));
 
-        self::assertEquals(Healthcheck::WARNING, $array[0]->getType());
-        self::assertEquals(Healthcheck::INFO, $array[1]->getType());
-        self::assertEquals(Healthcheck::CRITICAL, $array[2]->getType());
-        self::assertEquals(Healthcheck::CRITICAL, $array[3]->getType());
+        $resultDto = $this->pulse->run();
+
+        self::assertEquals(LevelEnum::info, $resultDto->rules[0]->level);
+        self::assertEquals(LevelEnum::info, $resultDto->rules[1]->level);
+    }
+
+    public function testAddWarning(): void
+    {
+        $this->pulse->addWarning(new ClosureRule(
+            fn() => false,
+            'Warning rule',
+        ));
+
+        $this->pulse->addWarning(new ClosureRule(
+            fn() => false,
+            'Warning rule',
+            LevelEnum::info,
+        ));
+
+        $resultDto = $this->pulse->run();
+
+        self::assertEquals(LevelEnum::warning, $resultDto->rules[0]->level);
+        self::assertEquals(LevelEnum::warning, $resultDto->rules[1]->level);
+    }
+
+    public function testAddCritical(): void
+    {
+        $this->pulse->addCritical(new ClosureRule(
+            fn() => false,
+            'Critical rule',
+        ));
+
+        $this->pulse->add(new ClosureRule(
+            fn() => false,
+            'Critical rule',
+        ), LevelEnum::critical);
+
+        $resultDto = $this->pulse->run();
+
+        self::assertEquals(LevelEnum::critical, $resultDto->rules[0]->level);
+        self::assertEquals(LevelEnum::critical, $resultDto->rules[1]->level);
     }
 }
