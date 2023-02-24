@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \ilyaplot\pulse\rules\FileRule
  * @covers \ilyaplot\pulse\rules\AbstractRule
  */
-class FileExistsRuleTest extends TestCase
+class FileRuleTest extends TestCase
 {
     public function testSuccess(): void
     {
@@ -45,9 +45,30 @@ class FileExistsRuleTest extends TestCase
         self::assertEquals('Test rule', $rule->getDescription());
     }
 
-    public function testBadClosure(): void
+    public function testFileIsDirectory(): void
     {
-        $rule = new FileRule(__FILE__, 'Test rule', LevelEnum::critical);
-        self::assertEquals('Test rule', $rule->getDescription());
+        $rule = new FileRule(
+            __FILE__,
+            checkIsDirectory: true,
+        );
+        self::assertEquals(false, $rule->getStatus());
+    }
+
+    public function testDirectoryIsFile(): void
+    {
+        $rule = new FileRule(
+            __DIR__,
+            checkIsFile: true,
+        );
+        self::assertEquals(false, $rule->getStatus());
+    }
+
+    public function testIsExecutable(): void
+    {
+        $rule = new FileRule(
+            __FILE__,
+            checkExecutable: true,
+        );
+        self::assertEquals(false, $rule->getStatus());
     }
 }
