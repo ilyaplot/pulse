@@ -1,4 +1,4 @@
-name: PHP Composer
+name: tests
 
 on:
     push:
@@ -34,9 +34,3 @@ jobs:
 
             -   name: Run test suite
                 run: composer run-script test
-
-            -   name: Run cs
-                run: composer run-script cs
-
-            -   name: Run spalm
-                run: composer run-script psalm

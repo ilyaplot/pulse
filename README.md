@@ -8,6 +8,7 @@ Pulse allows you to easily write healthchecks for your application and display a
 [![Code Coverage](https://codecov.io/gh/ilyaplot/pulse/branch/master/graph/badge.svg)](https://codecov.io/gh/ilyaplot/pulse)
 [![type-coverage](https://shepherd.dev/github/ilyaplot/pulse/coverage.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 [![static analysis](https://github.com/ilyaplot/pulse/workflows/static%20analysis/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22static+analysis%22)
+[![tests](https://github.com/ilyaplot/pulse/workflows/tests/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22tests%22)
 [![psalm-level](https://shepherd.dev/github/ilyaplot/pulse/level.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 
 #### Wait, what's a healthcheck?
