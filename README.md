@@ -4,7 +4,6 @@ Pulse allows you to easily write healthchecks for your application and display a
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/validator/v/stable.png)](https://packagist.org/packages/ilyaplot/pulse)
 [![Total Downloads](https://poser.pugx.org/ilyaplot/pulse/downloads.png)](https://packagist.org/packages/ilyaplot/pulse)
-[![Build status](https://github.com/ilyaplot/pulse/workflows/build/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3Abuild)
 [![Code Coverage](https://codecov.io/gh/ilyaplot/pulse/branch/master/graph/badge.svg)](https://codecov.io/gh/ilyaplot/pulse)
 [![type-coverage](https://shepherd.dev/github/ilyaplot/pulse/coverage.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 [![static analysis](https://github.com/ilyaplot/pulse/workflows/static%20analysis/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22static+analysis%22)
