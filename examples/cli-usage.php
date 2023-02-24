@@ -44,7 +44,7 @@ return $result->isSuccess ? 0 : 1;
 
 /**
  * Output:
-Connection to database (CRITICAL): FAIL with error: SQLSTATE[HY000] [2002] No such file or directory
+Connection to database (CRITICAL): FAIL with message: SQLSTATE[HY000] [2002] No such file or directory
 
 Healthcheck summary: FAIL
 

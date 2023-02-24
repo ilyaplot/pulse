@@ -33,7 +33,7 @@ class PlainTextFormatter
             $ruleResultDto->description,
             $levelString,
             $statusString,
-            $ruleResultDto->errorMessage ? ' with error: ' . $ruleResultDto->errorMessage : '',
+            $ruleResultDto->errorMessage ? ' with message: ' . $ruleResultDto->errorMessage : '',
         );
     }
 

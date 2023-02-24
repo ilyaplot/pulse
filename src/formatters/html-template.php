@@ -79,7 +79,7 @@ use ilyaplot\pulse\ResultDto;
                 <?= htmlentities($result->description) ?>
                 (<?= $formatter->getLevelString($result->level) ?>):
                 <strong><?= $result->isSuccess ? 'PASS' : 'FAIL' ?></strong>
-                <?= $result->errorMessage ? 'with error: ' . htmlentities($result->errorMessage) : '' ?>
+                <?= $result->errorMessage ? 'with message: ' . htmlentities($result->errorMessage) : '' ?>
             </li>
         <?php endforeach; ?>
         <li class="summary <?= $resultDto->isSuccess ? 'pass' : 'fail' ?>">

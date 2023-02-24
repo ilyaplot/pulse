@@ -1,8 +1,8 @@
 Rule 1 (INFO): PASS
-Rule 2 (WARNING): PASS with error: Test
+Rule 2 (WARNING): PASS with message: Test
 Rule 3 (CRITICAL): PASS
 Rule 4 (INFO): FAIL
-Rule 5 (WARNING): FAIL with error: Test
+Rule 5 (WARNING): FAIL with message: Test
 Rule 6 (CRITICAL): FAIL
 
 Healthcheck summary: FAIL
