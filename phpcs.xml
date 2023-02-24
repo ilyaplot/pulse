@@ -9,9 +9,7 @@
 
     <config name="installed_paths" value="vendor/slevomat/coding-standard"/>
 
-    <rule ref="PSR12">
-        <exclude name="PSR2.Files.EndFileNewline.NoneFound"/>
-    </rule>
+    <rule ref="PSR12"/>
 
     <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">

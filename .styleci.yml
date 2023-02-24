@@ -5,7 +5,6 @@ version: 8.1
 
 finder:
   exclude:
-    - docs
     - vendor
 
 enabled:
@@ -81,6 +80,4 @@ enabled:
   - empty_loop_body_braces
   - integer_literal_case
   - union_type_without_spaces
-
-disabled:
   - function_declaration
