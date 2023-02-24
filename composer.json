@@ -27,7 +27,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "XDEBUG_MODE=coverage phpunit",
         "cs": "phpcs src tests",
         "cs-fix": "phpcbf src tests",
         "psalm": "psalm"
