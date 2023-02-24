@@ -9,6 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \ilyaplot\pulse\Pulse
+ * @covers \ilyaplot\pulse\LevelEnum
+ * @covers \ilyaplot\pulse\ResultDto
+ * @covers \ilyaplot\pulse\RuleResultDto
+ * @covers \ilyaplot\pulse\rules\AbstractRule
+ * @uses   \ilyaplot\pulse\rules\ClosureRule
  */
 class PulseTest extends TestCase
 {
@@ -25,9 +30,6 @@ class PulseTest extends TestCase
         self::assertTrue($this->pulse->run()->isSuccess, 'Empty rules should be ok');
     }
 
-    /**
-     * @uses \ilyaplot\pulse\rules\ClosureRule
-     */
     public function testInfo(): void
     {
         $this->pulse->add(new ClosureRule(
@@ -42,9 +44,6 @@ class PulseTest extends TestCase
         self::assertTrue($this->pulse->run(LevelEnum::info)->isSuccess);
     }
 
-    /**
-     * @uses \ilyaplot\pulse\rules\ClosureRule
-     */
     public function testWarning(): void
     {
         $this->pulse->add(new ClosureRule(
@@ -59,9 +58,6 @@ class PulseTest extends TestCase
         self::assertFalse($this->pulse->run(LevelEnum::info)->isSuccess);
     }
 
-    /**
-     * @uses \ilyaplot\pulse\rules\ClosureRule
-     */
     public function testCritical(): void
     {
         $this->pulse->add(new ClosureRule(

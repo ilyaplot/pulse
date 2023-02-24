@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \ilyaplot\pulse\rules\FileExistsRule
+ * @covers \ilyaplot\pulse\rules\AbstractRule
  */
 class FileExistsRuleTest extends TestCase
 {

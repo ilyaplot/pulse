@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \ilyaplot\pulse\rules\ClosureRule
+ * @covers \ilyaplot\pulse\rules\AbstractRule
  */
 class ClosureRuleTest extends TestCase
 {
