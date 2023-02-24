@@ -27,7 +27,7 @@
         "test": "phpunit",
         "cs": "phpcs src tests",
         "cs-fix": "phpcbf src tests",
-        "psalm": "psalm"
+        "psalm": "psalm --shepherd --stats --output-format=github"
     },
     "license":"MIT",
     "config": {
