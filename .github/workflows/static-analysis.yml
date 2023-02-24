@@ -33,7 +33,7 @@ jobs:
                 run: composer install --prefer-dist --no-progress
 
             -   name: Run test suite
-                run: composer run-script test
+                run: composer run-script test -- --shepherd
 
             -   name: Run psalm
                 run: composer run-script psalm
