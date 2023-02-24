@@ -51,6 +51,11 @@ class ClosureRuleTest extends TestCase
     public function testBadClosure(): void
     {
         $rule = new ClosureRule(fn() => 'Wrong result', 'Test rule', LevelEnum::critical);
-        self::assertEquals('Test rule', $rule->getDescription());
+
+        try {
+            $rule->getStatus();
+        } catch (AssertionError $e) {
+            self::assertEquals('Healthcheck callable must return bool', $e->getMessage());
+        }
     }
 }

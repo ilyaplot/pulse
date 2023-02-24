@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ilyaplot\pulse\rules;
 
+use AssertionError;
 use ilyaplot\pulse\LevelEnum;
 
 abstract class AbstractRule implements RuleInterface
@@ -12,6 +13,9 @@ abstract class AbstractRule implements RuleInterface
     protected string $description = '';
     protected ?LevelEnum $level = null;
 
+    /**
+     * @throws AssertionError
+     */
     public function getStatus(): bool
     {
         if ($this->status === null) {
