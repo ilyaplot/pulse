@@ -33,7 +33,7 @@ jobs:
                 run: composer install --prefer-dist --no-progress
 
             -   name: Run test suite
-                run: composer run-script test -- --coverage-clover=coverage.xml --colors=always
+                run: XDEBUG_MODE=coverage composer run-script test -- --coverage-clover=coverage.xml --colors=always
 
             -   name: Upload coverage reports to Codecov
                 uses: codecov/codecov-action@v3
