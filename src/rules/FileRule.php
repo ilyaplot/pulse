@@ -33,7 +33,7 @@ class FileRule extends AbstractRule implements RuleInterface
             return false;
         }
 
-        if ($this->checkWriteable && !is_writeable($this->fileName)) {
+        if ($this->checkWriteable && !is_writable($this->fileName)) {
             $this->setErrorMessage($this->fileName . ' is not writeable');
             return false;
         }
