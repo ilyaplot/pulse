@@ -24,7 +24,7 @@ composer require ilyaplot/pulse
 
 Include `vendor/autoload.php`, and you're off to the races!
 
-See examples in `/examples`.
+See examples in `examples`.
 
 #### Examples
 

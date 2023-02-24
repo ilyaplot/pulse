@@ -50,8 +50,8 @@ echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
 /*
  *  Output:
 {
-    "isSuccess": false,
-    "rules": [
+    "healthy": false,
+    "healthchecks": [
         {
             "isSuccess": true,
             "description": "File exists",
@@ -62,7 +62,7 @@ echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
             "isSuccess": false,
             "description": "Directory exists",
             "level": "warning",
-            "errorMessage": "\/Users\/plotnikov\/workspace\/pulse\/examples\/http-usage.php is not a directory"
+            "errorMessage": "\/Users\/ilyaplot\/workspace\/pulse\/examples\/http-usage.php is not a directory"
         },
         {
             "isSuccess": false,
@@ -70,6 +70,8 @@ echo json_encode($result, JSON_PRETTY_PRINT) . PHP_EOL;
             "level": "critical",
             "errorMessage": null
         }
-    ]
+    ],
+    "critical": 1,
+    "warnings": 1
 }
  */
