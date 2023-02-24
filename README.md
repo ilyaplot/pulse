@@ -26,11 +26,7 @@ Include `vendor/autoload.php`, and you're off to the races!
 
 See examples in `/examples`.
 
-#### Critical Checks
-
-Healthchecks are critical by default, which means that the healthcheck page will return a 503 status code. Use these to see when there is a critical failure in your system. Critical checks must return boolean `true` or `false`. Add them with `add()`, or more explicitly with `addCritical()`.
-
-Here's an example implementation of `healthcheck.php` that checks connectivity to memcache:
+#### Examples
 
 ```php
 $pulse = new ilyaplot\pulse\Pulse();
@@ -68,7 +64,7 @@ $pulse->addWarning(new ClosureRule(
 #### Information
 
 ```php
-$pulse->addWarning(new ClosureRule(
+$pulse->addInfo(new ClosureRule(
     fn() => (new YoutubeClient())->->isUp(),
     "Verify connectivity to youtube", 
 );
@@ -80,26 +76,6 @@ $pulse->addInfo(new ClosureRule("Today is", function(ClosureRule $closureRule) {
 
 $result = $pulse->run();
 ```
-
-## Response Specification
-
-// TODO:
-
-Pulse can be run via command-line, accessed via the browser, or used with tools like CURL.
-
-Pulse automatically detects whether you're running from a browser, commandline, or CURLy interface and responds with color-blind-friendly html, json, or plaintext as appropriate.
-
-#### Status Codes
-
-Pulse responds with `200` status codes when all tests pass. If a test fails, pulse responds with `503`. You can see these via curl:
-
-	$ curl -i http://example.com/healthcheck.php
-
-#### JSON Format
-
-To enable json-y goodness, you'll need to send `Accept: application/json`. E.g:
-
-	$ curl -H "Accept: application/json" http://example.com/healthcheck.php
 
 ## Examples
 
