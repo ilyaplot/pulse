@@ -4,9 +4,9 @@ risky: true
 version: 8.1
 
 finder:
-exclude:
-  - docs
-  - vendor
+  exclude:
+    - docs
+    - vendor
 
 enabled:
   - alpha_ordered_traits
