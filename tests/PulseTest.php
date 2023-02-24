@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \ilyaplot\pulse\ResultDto
  * @covers \ilyaplot\pulse\RuleResultDto
  * @covers \ilyaplot\pulse\rules\AbstractRule
+ *
  * @uses   \ilyaplot\pulse\rules\ClosureRule
  */
 class PulseTest extends TestCase
