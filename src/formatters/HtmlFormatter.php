@@ -8,11 +8,6 @@ use ilyaplot\pulse\LevelEnum;
 use ilyaplot\pulse\ResultDto;
 use RuntimeException;
 
-/**
- * @covers /src/formatters/html-template.php:90
-- ilyaplot\pulse\ResultDto
-- ilyaplot\pulse\RuleResultDto
- */
 class HtmlFormatter
 {
     public function __construct(

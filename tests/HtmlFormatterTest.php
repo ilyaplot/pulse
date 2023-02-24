@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \ilyaplot\pulse\formatters\HtmlFormatter
+ * @covers \ilyaplot\pulse\ResultDto
+ * @covers \ilyaplot\pulse\RuleResultDto
  */
 class HtmlFormatterTest extends TestCase
 {
