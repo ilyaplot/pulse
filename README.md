@@ -9,7 +9,7 @@ Pulse allows you to easily write healthchecks for your application and display a
 [![static analysis](https://github.com/ilyaplot/pulse/workflows/static%20analysis/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22static+analysis%22)
 [![tests](https://github.com/ilyaplot/pulse/workflows/tests/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22tests%22)
 [![psalm-level](https://shepherd.dev/github/ilyaplot/pulse/level.svg)](https://shepherd.dev/github/ilyaplot/pulse)
-
+[![StyleCI](https://github.styleci.io/repos/605941101/shield?style=plastic)](https://github.styleci.io/repos/605941101)
 #### Wait, what's a healthcheck?
 
 Healthchecks are a great way to test system health and connectivity to other services. For example, you can verify connectivity to memcache or mysql, that your app can read / write to certain files, or that your API key for a third-party service is still working.
