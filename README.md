@@ -19,16 +19,11 @@ Healthchecks are a great way to test system health and connectivity to other ser
 
 You can install this into your project using [composer](http://getcomposer.org/doc/00-intro.md#installation-nix). Create a `composer.json` file in the root of your project and add the following:
 
-```json
-{
-    "require": {
-        "php": ">=5.3.0",
-        "ilyaplot/Pulse": "1.0.*"
-    }
-}
+```
+composer require ilyaplot/pulse
 ```
 
-Run `composer install`, include `vendor/autoload.php`, and you're off to the races!
+Include `vendor/autoload.php`, and you're off to the races!
 
 ## Example Usage
 
