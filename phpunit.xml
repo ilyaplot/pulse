@@ -23,5 +23,8 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <directory>src/formatters/html-template.php</directory>
+        </exclude>
     </coverage>
 </phpunit>
