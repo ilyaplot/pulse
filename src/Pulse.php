@@ -51,7 +51,7 @@ class Pulse
     public function run(LevelEnum $successLevel = LevelEnum::warning): ResultDto
     {
         foreach ($this->rules as $rule) {
-            assert($rule instanceof RuleInterface);
+            assert($rule instanceof RuleInterface, 'Rule must implement RuleInterface');
             $rule->run();
         }
 
@@ -86,6 +86,7 @@ class Pulse
             $rule->getStatus(),
             $rule->getDescription(),
             $this->getRuleLevel($rule),
+            $rule->getErrorMessage(),
         );
     }
 }

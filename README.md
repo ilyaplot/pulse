@@ -24,7 +24,7 @@ composer require ilyaplot/pulse
 
 Include `vendor/autoload.php`, and you're off to the races!
 
-## Example Usage
+See examples in `/examples`.
 
 #### Critical Checks
 
@@ -58,25 +58,32 @@ $pulse->addCritical("Check memcache connectivity", function() use ($config) {
 For non-critical checks you can use a warning and you'll get status 200 even if these fail. Use these to see when your app is experiencing service degredation but is still available. Warning checks must return boolean `true` or `false`.
 
 ```php
-$pulse->addWarning("Verify connectivity to youtube", function() {
-	$youtube = new YoutubeClient();
-	return $youtube->isUp();
-});
+$pulse->addWarning(new ClosureRule(
+    "Verify connectivity to youtube", 
+    fn() => (new YoutubeClient())->->isUp(),
+    LevelEnum::warning,
+);
 ```
 
 #### Information
 
-If you want to pass back non-boolean, informational data, you can use `addInfo()`.
-
 ```php
-$pulse->addInfo("Today is", function() {
-	return date('l');
+$pulse->addWarning(new ClosureRule(
+    fn() => (new YoutubeClient())->->isUp(),
+    "Verify connectivity to youtube", 
+);
+
+$pulse->addInfo(new ClosureRule("Today is", function(ClosureRule $closureRule) {
+    $this->setErrorMessage('Today is ' . date('l'));
+	return false;
 });
 
-$pulse->check();
+$result = $pulse->run();
 ```
 
 ## Response Specification
+
+// TODO:
 
 Pulse can be run via command-line, accessed via the browser, or used with tools like CURL.
 

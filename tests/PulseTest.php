@@ -5,7 +5,7 @@ declare(strict_types=1);
 use ilyaplot\pulse\LevelEnum;
 use ilyaplot\pulse\Pulse;
 use ilyaplot\pulse\rules\ClosureRule;
-use ilyaplot\pulse\rules\FileExistsRule;
+use ilyaplot\pulse\rules\FileRule;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -137,12 +137,25 @@ class PulseTest extends TestCase
                 fn() => false,
                 'Critical rule',
             ),
-            new FileExistsRule(
+            new FileRule(
                 __FILE__,
                 'Critical rule',
             ),
         ]);
 
         self::assertFalse($pulse->run()->isSuccess);
+    }
+
+    public function testInvalidRule(): void
+    {
+        $pulse = new Pulse([
+            'invalid rule',
+        ]);
+
+        try {
+            $pulse->run();
+        } catch (AssertionError $exception) {
+            self::assertEquals('Rule must implement RuleInterface', $exception->getMessage());
+        }
     }
 }

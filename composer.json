@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "vimeo/psalm": "^5.7",

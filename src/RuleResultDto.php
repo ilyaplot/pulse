@@ -10,6 +10,7 @@ final class RuleResultDto
         public readonly bool $isSuccess,
         public readonly string $description,
         public readonly LevelEnum $level,
+        public readonly ?string $errorMessage = null,
     ) {
     }
 }

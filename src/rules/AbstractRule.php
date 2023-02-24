@@ -6,12 +6,14 @@ namespace ilyaplot\pulse\rules;
 
 use AssertionError;
 use ilyaplot\pulse\LevelEnum;
+use Throwable;
 
 abstract class AbstractRule implements RuleInterface
 {
     protected ?bool $status = null;
     protected string $description = '';
     protected ?LevelEnum $level = null;
+    protected ?string $errorMessage = null;
 
     /**
      * @throws AssertionError
@@ -19,7 +21,14 @@ abstract class AbstractRule implements RuleInterface
     public function getStatus(): bool
     {
         if ($this->status === null) {
-            $this->status = $this->run();
+            try {
+                $this->status = $this->run();
+            } catch (AssertionError $exception) {
+                throw $exception;
+            } catch (Throwable $exception) {
+                $this->status = false;
+                $this->setErrorMessage($exception->getMessage());
+            }
         }
         return $this->status;
     }
@@ -37,6 +46,16 @@ abstract class AbstractRule implements RuleInterface
     public function setLevel(LevelEnum $level): void
     {
         $this->level = $level;
+    }
+
+    public function setErrorMessage(string $errorMessage): void
+    {
+        $this->errorMessage = $errorMessage;
+    }
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->errorMessage;
     }
 
     abstract public function run(): bool;

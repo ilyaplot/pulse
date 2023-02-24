@@ -17,4 +17,8 @@ interface RuleInterface
     public function getLevel(): ?LevelEnum;
 
     public function setLevel(LevelEnum $level): void;
+
+    public function setErrorMessage(string $errorMessage): void;
+
+    public function getErrorMessage(): ?string;
 }

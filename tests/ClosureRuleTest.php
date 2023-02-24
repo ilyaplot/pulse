@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use ilyaplot\pulse\LevelEnum;
+use ilyaplot\pulse\Pulse;
 use ilyaplot\pulse\rules\ClosureRule;
 use ilyaplot\pulse\rules\RuleInterface;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +14,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ClosureRuleTest extends TestCase
 {
+    private int $counter = 0;
+
+    protected function setUp(): void
+    {
+        $this->counter = 0;
+    }
+
     public function testSuccess(): void
     {
         $rule = new ClosureRule(fn() => true, 'Test rule');
@@ -55,7 +63,47 @@ class ClosureRuleTest extends TestCase
         try {
             $rule->getStatus();
         } catch (AssertionError $e) {
-            self::assertEquals('Healthcheck callable must return bool', $e->getMessage());
+            self::assertEquals('$checkFunction must return bool result', $e->getMessage());
         }
+    }
+
+    public function testRunsWithStatusCount(): void
+    {
+        $rule = new ClosureRule(function () {
+            $this->counter++;
+            return true;
+        }, 'Test rule', LevelEnum::critical);
+        $rule->getStatus();
+        $rule->getStatus();
+        $rule->getStatus();
+        self::assertEquals(1, $this->counter);
+    }
+
+    public function testRunsCount(): void
+    {
+        $rule = new ClosureRule(function () {
+            $this->counter++;
+            return true;
+        }, 'Test rule', LevelEnum::critical);
+        $rule->run();
+        $rule->run();
+        $rule->run();
+        self::assertEquals(3, $this->counter);
+    }
+
+    public function testFullRunCounts(): void
+    {
+        $rule = new ClosureRule(
+            function () {
+                $this->counter++;
+                return true;
+            },
+            'Test rule'
+        );
+
+        $pulse = new Pulse([$rule, $rule]);
+        $pulse->run();
+
+        self::assertEquals(2, $this->counter);
     }
 }
