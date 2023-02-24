@@ -31,13 +31,15 @@ See examples in `/examples`.
 ```php
 $pulse = new ilyaplot\pulse\Pulse();
 
-$pulse->add("Check that config file is readable", function(){
-	return is_readable('/path/to/your/config/file');
-});
+$pulse->add(new FileRule(
+    '/path/to/your/config/file',
+    checkIsReadable: true,
+    "Check that config file is readable",
+));
 
 include '/path/to/your/config/file';
 
-$pulse->addCritical("Check memcache connectivity", function() use ($config) {
+$pulse->addCritical(new ClosureRule(function() use ($config) {
 	$memcache = new Memcache();
 	if(!$memcache->connect($config['memcache_host'], $config['memcache_port'])){
 		return false;
@@ -46,7 +48,7 @@ $pulse->addCritical("Check memcache connectivity", function() use ($config) {
 	$msg = 'memcache is working';
 	$memcache->set($key, $msg);
 	return $memcache->get($key) === $msg;
-});
+}, "Check memcache connectivity");
 ```
 
 #### Warnings
