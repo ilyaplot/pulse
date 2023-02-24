@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
 use ilyaplot\Pulse\Pulse;
 use ilyaplot\Pulse\Healthcheck;
 
-class PulseTest extends PHPUnit_Framework_TestCase
+class PulseTest extends PHPUnit\Framework\TestCase
 {
     public function testBasicUsage()
     {
@@ -14,7 +16,7 @@ class PulseTest extends PHPUnit_Framework_TestCase
         $pulse = new Pulse();
 
         // Dynamically add a new healthcheck
-        $pulse->add("Test that this file exists", function () use ($file) {
+        $pulse->add('Test that this file exists', function () use ($file) {
             return file_exists($file);
         });
 
@@ -40,34 +42,40 @@ class PulseTest extends PHPUnit_Framework_TestCase
     {
         $pulse = new Pulse();
 
-        $pulse->addWarning("Test explicit warning", function() {
+        $pulse->addWarning('Test explicit warning', function() {
             return false;
         });
 
-        $pulse->addInfo("Output some info", function() {
-            return "Testing!";
+        $pulse->addInfo('Output some info', function() {
+            return 'Testing!';
         });
 
-        $this->assertEquals(true, $pulse->getStatus(),
-            "No critical failures, summary should pass");
+        $this->assertEquals(
+            true,
+            $pulse->getStatus(),
+            'No critical failures, summary should pass'
+        );
 
-        $pulse->add("Test default (warning)", function() {
+        $pulse->add('Test default (warning)', function() {
             return false;
         });
 
-        $pulse->addCritical("Test critical failure", function() {
+        $pulse->addCritical('Test critical failure', function() {
             return false;
         });
 
         // At this point we have one critical failure so the check should fail
-        $this->assertEquals(false, $pulse->getStatus(),
-            "One critical failure, summary should fail");
+        $this->assertEquals(
+            false,
+            $pulse->getStatus(),
+            'One critical failure, summary should fail'
+        );
 
 
         $array = $pulse->getHealthchecks();
 
-        $this->assertEquals(Healthcheck::WARNING,  $array[0]->getType());
-        $this->assertEquals(Healthcheck::INFO,     $array[1]->getType());
+        $this->assertEquals(Healthcheck::WARNING, $array[0]->getType());
+        $this->assertEquals(Healthcheck::INFO, $array[1]->getType());
         $this->assertEquals(Healthcheck::CRITICAL, $array[2]->getType());
         $this->assertEquals(Healthcheck::CRITICAL, $array[3]->getType());
     }
