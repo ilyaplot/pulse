@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ilyaplot\Pulse;
 
 class Healthcheck
 {
-    const INFO = 'info';
-    const WARNING = 'warning';
-    const CRITICAL = 'critical';
+    public const INFO = 'info';
+    public const WARNING = 'warning';
+    public const CRITICAL = 'critical';
 
     private $description = null;
     private $callable = null;

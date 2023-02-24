@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
 use ilyaplot\Pulse\Healthcheck;
 
-class HealthcheckTest extends PHPUnit_Framework_TestCase
+class HealthcheckTest extends PHPUnit\Framework\TestCase
 {
     public function testGetDescription()
     {
         $description = 'My description';
-        $check = new Healthcheck($description, function () {});
+        $check = new Healthcheck($description, function () {
+        });
         $this->assertEquals($description, $check->getDescription());
     }
 
@@ -38,7 +41,7 @@ class HealthcheckTest extends PHPUnit_Framework_TestCase
 
     public function testWarning()
     {
-        $check = new Healthcheck("This is a warning", function(){
+        $check = new Healthcheck('This is a warning', function() {
             return true;
         }, Healthcheck::WARNING);
 
@@ -47,17 +50,17 @@ class HealthcheckTest extends PHPUnit_Framework_TestCase
 
     public function testInfo()
     {
-        $check = new Healthcheck("This is a info-level check", function(){
-            return "This is a message!";
+        $check = new Healthcheck('This is a info-level check', function() {
+            return 'This is a message!';
         }, Healthcheck::INFO);
 
         $this->assertEquals(Healthcheck::INFO, $check->getType());
-        $this->assertEquals("This is a message!", $check->getStatus());
+        $this->assertEquals('This is a message!', $check->getStatus());
     }
 
     public function testCritical()
     {
-        $check = new Healthcheck("This is a critical check", function(){
+        $check = new Healthcheck('This is a critical check', function() {
             return true;
         }, Healthcheck::CRITICAL);
 

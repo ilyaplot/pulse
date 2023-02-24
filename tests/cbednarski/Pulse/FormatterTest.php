@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
 use ilyaplot\Pulse\Pulse as Pulse;
 use ilyaplot\Pulse\Formatter as Formatter;
 
-class FormatterTest extends PHPUnit_Framework_TestCase
+class FormatterTest extends PHPUnit\Framework\TestCase
 {
     private $fail_pulse;
 
@@ -19,10 +21,10 @@ class FormatterTest extends PHPUnit_Framework_TestCase
         $this->fail_pulse->addWarning('This is a warning', function() {
             return false;
         });
-        $this->fail_pulse->add('This test should pass', function(){
+        $this->fail_pulse->add('This test should pass', function() {
             return true;
         });
-        $this->fail_pulse->add('This test should fail', function(){
+        $this->fail_pulse->add('This test should fail', function() {
             return false;
         });
 
@@ -31,10 +33,10 @@ class FormatterTest extends PHPUnit_Framework_TestCase
         $this->success_pulse->addWarning('This test should fail', function () {
             return false;
         });
-        $this->success_pulse->add('This test should pass', function(){
+        $this->success_pulse->add('This test should pass', function() {
             return true;
         });
-        $this->success_pulse->add('This test should also pass', function(){
+        $this->success_pulse->add('This test should also pass', function() {
             return true;
         });
     }

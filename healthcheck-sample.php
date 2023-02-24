@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $pulse = new ilyaplot\Pulse\Pulse();
 
-$pulse->add('This is a critical check that is passing', function(){
+$pulse->add('This is a critical check that is passing', function() {
     return true;
 });
 

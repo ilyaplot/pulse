@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ilyaplot\Pulse;
 
 class Pulse
 {
-    private $healthchecks = array();
+    private $healthchecks = [];
 
     /**
      * Convenience function for adding simple healthchecks. Note: These default to
@@ -73,7 +75,7 @@ class Pulse
     }
 
     /**
-     * @return Array List of all healthchecks currently registered
+     * @return array List of all healthchecks currently registered
      */
     public function getHealthchecks()
     {

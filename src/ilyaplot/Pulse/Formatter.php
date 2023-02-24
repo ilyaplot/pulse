@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ilyaplot\Pulse;
 
 class Formatter
@@ -8,13 +10,13 @@ class Formatter
     {
         static::contentType('application/json');
 
-        $temp = array('all-passing' => $pulse->getStatus(), 'healthchecks' => array());
+        $temp = ['all-passing' => $pulse->getStatus(), 'healthchecks' => []];
 
         foreach ($pulse->getHealthchecks() as $healthcheck) {
-            $temp_array = array(
+            $temp_array = [
                 'description' => $healthcheck->getDescription(),
                 'type' => $healthcheck->getType(),
-            );
+            ];
 
             if ($healthcheck->getType() === Healthcheck::INFO) {
                 $temp_array['data'] = $healthcheck->getStatus();
@@ -27,7 +29,7 @@ class Formatter
 
         static::responseIsPassing($temp['all-passing']);
 
-        return json_encode($temp);;
+        return json_encode($temp);
     }
 
     public static function getTemplate()
@@ -58,22 +60,22 @@ class Formatter
 
     public static function htmlHealthcheck(Healthcheck $healthcheck)
     {
-        return '            <li class="healthcheck ' . $healthcheck->getType() .static::statusToClass($healthcheck->getStatus()).'">'.$healthcheck->getDescription().': <b>'.static::statusToStr($healthcheck->getStatus()).'</b></li>'."\n";
+        return '            <li class="healthcheck ' . $healthcheck->getType() . static::statusToClass($healthcheck->getStatus()) . '">' . $healthcheck->getDescription() . ': <b>' . static::statusToStr($healthcheck->getStatus()) . '</b></li>' . "\n";
     }
 
     public static function htmlSummary($status)
     {
-        return '            <li class="summary '.static::statusToStr($status).'">Healthcheck summary: '.static::statusToStr($status).'</li>';
+        return '            <li class="summary ' . static::statusToStr($status) . '">Healthcheck summary: ' . static::statusToStr($status) . '</li>';
     }
 
     public static function toPlain(Pulse $pulse)
     {
-        static::contentType("text/plain");
+        static::contentType('text/plain');
 
         $temp = '';
 
         foreach ($pulse->getHealthchecks() as $healthcheck) {
-            $temp .= $healthcheck->getDescription() . ' ('.$healthcheck->getType().'): ' . self::statusToStr($healthcheck->getStatus()) . PHP_EOL;
+            $temp .= $healthcheck->getDescription() . ' (' . $healthcheck->getType() . '): ' . self::statusToStr($healthcheck->getStatus()) . PHP_EOL;
         }
 
         $temp .= PHP_EOL . 'Healthcheck summary: ' . self::statusToStr($pulse->getStatus()) . PHP_EOL;
@@ -87,22 +89,22 @@ class Formatter
     {
         if ($status === true) {
             return 'pass';
-        } elseif ($status === false) {
-            return 'fail';
-        } else {
-            return $status;
         }
+        if ($status === false) {
+            return 'fail';
+        }
+        return $status;
     }
 
     public static function statusToClass($status)
     {
         if ($status === true) {
             return ' pass';
-        } elseif ($status === false) {
-            return ' fail';
-        } else {
-            return null;
         }
+        if ($status === false) {
+            return ' fail';
+        }
+        return null;
     }
 
     public static function autoexec(Pulse $pulse)
@@ -129,7 +131,7 @@ class Formatter
     public static function isBrowser()
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            foreach (array('Mozilla', 'Opera', 'AppleWebKit') as $browser) {
+            foreach (['Mozilla', 'Opera', 'AppleWebKit'] as $browser) {
                 if (strpos($_SERVER['HTTP_USER_AGENT'], $browser) !== false) {
                     return true;
                 }
@@ -141,7 +143,7 @@ class Formatter
 
     private static function contentType($type)
     {
-        if (php_sapi_name() !== 'cli') {
+        if (PHP_SAPI !== 'cli') {
             header('Cache-Control: no-cache');
             header('Content-Type: ' . $type);
         }
@@ -149,7 +151,7 @@ class Formatter
 
     private static function responseIsPassing($isPassing)
     {
-        if (php_sapi_name() !== 'cli') {
+        if (PHP_SAPI !== 'cli') {
             if ($isPassing) {
                 http_response_code(200);
             } else {
