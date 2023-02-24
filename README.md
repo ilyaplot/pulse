@@ -87,7 +87,7 @@ $result = $pulse->run();
 
 ## Examples
 
-You can see some very basic example healthchecks in `healthcheck-sample.php`. If you have php 5.4 or above, running `make dev` will load this so you can see it in action and play around with it.
+You can see some very basic example healthchecks in `examples/cli-usage.php` and `examples/http-usage.php`.
 
 ## Does Pulse Work With X?
 
