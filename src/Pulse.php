@@ -4,91 +4,84 @@ declare(strict_types=1);
 
 namespace ilyaplot\pulse;
 
-use Closure;
+use ilyaplot\pulse\rules\RuleInterface;
 
 class Pulse
 {
-    private array $healthChecks = [];
-
     /**
-     * Convenience function for adding simple healthchecks. Note: These default to
-     * type Healthcheck::CRITICAL.
-     *
-     * @param string  $description A description of this check
-     * @param Closure $healthcheck A callable that returns true when the check passes, false on failure
+     * @param RuleInterface[] $rules
      */
-    public function add(string $description, Closure $healthcheck): void
-    {
-        $this->addCritical($description, $healthcheck);
+    public function __construct(
+        private array $rules = [],
+    ) {
     }
 
-    /**
-     * Add a warning. If this healthcheck fails Pulse will respond with a 200, but will indicate errors.
-     */
-    public function addWarning(string $description, Closure $healthcheck): void
+    public function add(RuleInterface $rule, ?LevelEnum $levelEnum = null): void
     {
-        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::WARNING);
+        $newRule = clone $rule;
+
+        if ($levelEnum !== null) {
+            $newRule->setLevel($levelEnum);
+        } elseif ($newRule->getLevel() === null) {
+            $newRule->setLevel(LevelEnum::critical);
+        }
+
+        $this->rules[] = $newRule;
     }
 
-    /**
-     * Add a critical healthcheck. If this healthcheck fails Pulse will respond with a 503.
-     */
-    public function addCritical(string $description, Closure $healthcheck): void
+    public function addInfo(RuleInterface $rule): void
     {
-        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::CRITICAL);
+        $this->add($rule, LevelEnum::info);
     }
 
-    /**
-     * Add an informational message to the healthcheck list. The return value will be displayed vertabim.
-     */
-    public function addInfo(string $description, Closure $healthcheck): void
+    public function addWarning(RuleInterface $rule): void
     {
-        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::INFO);
+        $this->add($rule, LevelEnum::warning);
     }
 
-    /**
-     * Add an instance of healthcheck, useful if you want to subclass
-     * the healthcheck class and add custom behavior.
-     *
-     * @param Healthcheck $healthcheck
-     */
-    public function addHealthcheck(Healthcheck $healthcheck): void
+    public function addCritical(RuleInterface $rule): void
     {
-        $this->healthChecks[] = $healthcheck;
+        $this->add($rule);
     }
 
-    /**
-     * Evaluate all healthchecks and return a boolean based on the aggregate.
-     *
-     * @return bool true if all tests pass, false otherwise
-     */
-    public function getStatus(): bool
+    public function run(LevelEnum $successLevel = LevelEnum::warning): ResultDto
     {
+        foreach ($this->rules as $rule) {
+            assert($rule instanceof RuleInterface);
+            $rule->run();
+        }
+
+        $valuableResults = array_filter(
+            $this->rules,
+            fn(RuleInterface $result) => $this->getRuleLevel($result)->value > $successLevel->value,
+        );
+
         $status = true;
 
-        foreach ($this->healthChecks as $healthcheck) {
-            // Shortcut the rest if any check fails
-            if ($status && $healthcheck->getType() === Healthcheck::CRITICAL) {
-                $status = $status && $healthcheck->getStatus();
+        foreach ($valuableResults as $valuableResult) {
+            if (!$valuableResult->getStatus()) {
+                $status = false;
+                break;
             }
         }
 
-        return $status;
+        return new ResultDto($status, array_map(
+            fn(RuleInterface $rule) => $this->getRuleResult($rule),
+            $this->rules
+        ));
     }
 
-    /**
-     * @return array List of all healthchecks currently registered
-     */
-    public function getHealthChecks(): array
+    private function getRuleLevel(RuleInterface $rule): LevelEnum
     {
-        return $this->healthChecks;
+        return $rule->getLevel() ?? LevelEnum::critical;
     }
 
-    /**
-     * Evaluate all healthchecks and output a summary, using Formatter->autoexec()
-     */
-    public function check(): void
+    private function getRuleResult(RuleInterface $rule): RuleResultDto
     {
-        Formatter::autoexec($this);
+        return new RuleResultDto(
+            $rule->getStatus(),
+            $rule->getDescription(),
+            $this->getRuleLevel($rule),
+        );
     }
 }

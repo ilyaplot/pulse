@@ -3,12 +3,12 @@
     "description": "A healthcheck framework for PHP",
     "authors": [
         {
-            "name": "Chris Bednarski",
-            "email": "banzaimonkey@gmail.com"
-        },
-        {
             "name": "Ilya Plotnikov",
             "email": "ilyaplot@gmail.com"
+        },
+        {
+            "name": "Chris Bednarski",
+            "email": "banzaimonkey@gmail.com"
         }
     ],
     "require": {
@@ -16,10 +16,23 @@
     },
     "require-dev": {
         "vimeo/psalm": "^5.7",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "squizlabs/php_codesniffer": "^3.7",
+        "slevomat/coding-standard": "^8.8"
     },
     "autoload": {
         "psr-4": {"ilyaplot\\pulse\\": "src/"}
     },
-    "license":"MIT"
+    "scripts": {
+        "test": "phpunit",
+        "cs": "phpcs src tests",
+        "cs-fix": "phpcbf src tests",
+        "psalm": "psalm"
+    },
+    "license":"MIT",
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false
+        }
+    }
 }
