@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \ilyaplot\pulse\ResultDto
  * @covers \ilyaplot\pulse\RuleResultDto
  * @covers \ilyaplot\pulse\rules\AbstractRule
+ * @covers \ilyaplot\pulse\rules\FileRule
  *
  * @uses   \ilyaplot\pulse\rules\ClosureRule
  */

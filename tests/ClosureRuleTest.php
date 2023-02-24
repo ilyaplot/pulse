@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \ilyaplot\pulse\rules\ClosureRule
  * @covers \ilyaplot\pulse\rules\AbstractRule
+ * @covers \ilyaplot\pulse\Pulse
+ * @covers \ilyaplot\pulse\ResultDto
+ * @covers \ilyaplot\pulse\RuleResultDto
  */
 class ClosureRuleTest extends TestCase
 {
