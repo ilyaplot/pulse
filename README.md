@@ -33,8 +33,8 @@ $pulse = new ilyaplot\pulse\Pulse();
 
 $pulse->add(new FileRule(
     '/path/to/your/config/file',
-    checkIsReadable: true,
     description: "Check that config file is readable",
+    checkIsReadable: true,
 ));
 
 include '/path/to/your/config/file';
@@ -50,8 +50,8 @@ $pulse->addCritical(new ClosureRule(
         $memcache->set($key, $msg);
         return $memcache->get($key) === $msg;
     }, 
-    "Check memcache connectivity")
-);
+    "Check memcache connectivity"
+));
 ```
 
 #### Warnings
@@ -60,8 +60,8 @@ For non-critical checks you can use a warning and you'll get status 200 even if 
 
 ```php
 $pulse->addWarning(new ClosureRule(
-    "Verify connectivity to youtube", 
     fn() => (new YoutubeClient())->->isUp(),
+    "Verify connectivity to youtube",
     LevelEnum::warning,
 );
 ```
@@ -76,7 +76,7 @@ $pulse->addInfo(new ClosureRule(
 
 $pulse->addInfo(new ClosureRule(
     function(ClosureRule $closureRule) {
-        $this->setErrorMessage('Today is ' . date('l'));
+        $this->setErrorMessage( date('l'));
         return false;
     }, 
     "Today is",
