@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use ilyaplot\pulse\LevelEnum;
 use ilyaplot\pulse\rules\AbstractRule;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +13,7 @@ class AbstractRuleTest extends TestCase
     public function testInvalidRun(): void
     {
         $this->expectException(AssertionError::class);
-        $ruleClass = new class extends AbstractRule {
+        $rule = new class () extends AbstractRule {
             public function __construct()
             {
                 $this->description = 'Test description';
@@ -26,12 +25,12 @@ class AbstractRuleTest extends TestCase
             }
         };
 
-        $ruleClass->getStatus();
+        $rule->getStatus();
     }
 
     public function testRunException(): void
     {
-        $rule = new class extends AbstractRule {
+        $rule = new class () extends AbstractRule {
             public function __construct()
             {
                 $this->description = 'Test description';
