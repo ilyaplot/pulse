@@ -98,4 +98,30 @@ class ClosureRuleTest extends TestCase
 
         self::assertEquals(2, $this->counter);
     }
+
+    public function testException(): void
+    {
+        $rule = new ClosureRule(
+            function () {
+                throw new Exception('Test error');
+            },
+            'Test rule'
+        );
+
+        $rule->run();
+        self::assertFalse($rule->getStatus());
+        self::assertEquals('Test error', $rule->getErrorMessage());
+    }
+
+    public function testBadFunctionReturnType(): void
+    {
+        $rule = new ClosureRule(
+            fn() => 'Test error',
+            'Test rule'
+        );
+
+        $rule->run();
+        self::assertFalse($rule->getStatus());
+        self::assertEquals('ClosureRule::checkFunction must return bool', $rule->getErrorMessage());
+    }
 }

@@ -21,12 +21,18 @@ class ClosureRule extends AbstractRule implements RuleInterface
     {
         try {
             $checkResult = call_user_func($this->checkFunction, $this);
+
+            if (!is_bool($checkResult)) {
+                $this->setErrorMessage('ClosureRule::checkFunction must return bool');
+                $this->status = false;
+                return false;
+            }
         } catch (Throwable $exception) {
             $this->setErrorMessage($exception->getMessage());
-            $checkResult = false;
+            $this->status = false;
+            return false;
         }
 
-        assert(is_bool($checkResult), '$checkFunction must return bool result');
         $this->status = $checkResult;
         return $checkResult;
     }
