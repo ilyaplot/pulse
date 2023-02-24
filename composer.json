@@ -17,11 +17,14 @@
     "require-dev": {
         "vimeo/psalm": "^5.7",
         "phpunit/phpunit": "^10.0",
+        "phpunit/php-code-coverage": "^10.0",
         "squizlabs/php_codesniffer": "^3.7",
         "slevomat/coding-standard": "^8.8"
     },
     "autoload": {
-        "psr-4": {"ilyaplot\\pulse\\": "src/"}
+        "psr-4": {
+            "ilyaplot\\pulse\\": "src/"
+        }
     },
     "scripts": {
         "test": "phpunit",
@@ -29,7 +32,7 @@
         "cs-fix": "phpcbf src tests",
         "psalm": "psalm"
     },
-    "license":"MIT",
+    "license": "MIT",
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": false
