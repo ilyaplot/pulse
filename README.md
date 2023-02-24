@@ -24,9 +24,75 @@ composer require ilyaplot/pulse
 
 Include `vendor/autoload.php`, and you're off to the races!
 
-See examples in `examples`.
+#### Warnings
+
+For non-critical checks you can use a warning and you'll get status 200 even if these fail. Use these to see when your app is experiencing service degredation but is still available. Warning checks must return boolean `true` or `false`.
+
+```php
+$pulse->addWarning(new ClosureRule(
+    fn() => (new YoutubeClient())->->isUp(),
+    "Verify connectivity to youtube",
+    LevelEnum::warning,
+));
+```
+
+#### Information
+
+```php
+$pulse->addInfo(new ClosureRule(
+    fn() => (new YoutubeClient())->->isUp(),
+    "Verify connectivity to youtube", 
+));
+
+$pulse->addInfo(new ClosureRule(
+    function(ClosureRule $closureRule) {
+        $this->setErrorMessage( date('l'));
+        return false;
+    }, 
+    "Today is",
+));
+
+$result = $pulse->run();
+```
+
+#### Custom Rules
+
+You can also create your own custom rules by extending the `ilyaplot\pulse\rules\AbstractRule` class or implementing `ilyaplot\pulse\rules\RuleInterface`.
+For example, you could create a rule that checks that your app can connect to a third-party service.
+
+```php
+class YoutubeRule extends AbstractRule
+{
+    public function __construct(
+        private readonly string $apiKey,
+    ) {
+        $this->description = 'Verify connectivity to youtube';
+        $this->level = LevelEnum::warning;
+    }
+    
+    public function run(): bool
+    {
+        $youtubeClient = new YoutubeClient($this->apiKey);
+        try {
+            return $youtubeClient->isUp(); // bool
+        } catch (AuthenticationException) {
+            $this->setErrorMessage('Invalid API key');
+            return false;
+        }
+    }
+}
+```
+
+Then you can add it to your healthcheck:
+
+```php
+$pulse->add(new YoutubeRule('your-api-key-1'));
+$pulse->add(new YoutubeRule('your-api-key-2'));
+```
 
 #### Examples
+
+You can see some very basic example healthchecks in `examples/cli-usage.php` and `examples/http-usage.php`.
 
 ```php
 $pulse = new ilyaplot\pulse\Pulse();
@@ -53,41 +119,6 @@ $pulse->addCritical(new ClosureRule(
     "Check memcache connectivity"
 ));
 ```
-
-#### Warnings
-
-For non-critical checks you can use a warning and you'll get status 200 even if these fail. Use these to see when your app is experiencing service degredation but is still available. Warning checks must return boolean `true` or `false`.
-
-```php
-$pulse->addWarning(new ClosureRule(
-    fn() => (new YoutubeClient())->->isUp(),
-    "Verify connectivity to youtube",
-    LevelEnum::warning,
-);
-```
-
-#### Information
-
-```php
-$pulse->addInfo(new ClosureRule(
-    fn() => (new YoutubeClient())->->isUp(),
-    "Verify connectivity to youtube", 
-);
-
-$pulse->addInfo(new ClosureRule(
-    function(ClosureRule $closureRule) {
-        $this->setErrorMessage( date('l'));
-        return false;
-    }, 
-    "Today is",
-));
-
-$result = $pulse->run();
-```
-
-## Examples
-
-You can see some very basic example healthchecks in `examples/cli-usage.php` and `examples/http-usage.php`.
 
 ## Does Pulse Work With X?
 
