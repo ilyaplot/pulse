@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ilyaplot\Pulse;
+namespace ilyaplot\pulse;
 
 class Healthcheck
 {

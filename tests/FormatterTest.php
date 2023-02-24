@@ -2,41 +2,45 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../../../vendor/autoload.php');
+use ilyaplot\pulse\Formatter as Formatter;
+use ilyaplot\pulse\Pulse as Pulse;
+use PHPUnit\Framework\TestCase;
 
-use ilyaplot\Pulse\Pulse as Pulse;
-use ilyaplot\Pulse\Formatter as Formatter;
-
-class FormatterTest extends PHPUnit\Framework\TestCase
+/**
+ * @covers \ilyaplot\pulse\Formatter
+ * @uses   \ilyaplot\pulse\Pulse
+ */
+class FormatterTest extends TestCase
 {
-    private $fail_pulse;
+    private Pulse $pulseFail;
+    private Pulse $pulseSuccess;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->fail_pulse = new Pulse();
+        $this->pulseFail = new Pulse();
 
-        $this->fail_pulse->addInfo('Description', function () {
+        $this->pulseFail->addInfo('Description', function () {
             return 'this is some data';
         });
-        $this->fail_pulse->addWarning('This is a warning', function() {
+        $this->pulseFail->addWarning('This is a warning', function () {
             return false;
         });
-        $this->fail_pulse->add('This test should pass', function() {
+        $this->pulseFail->add('This test should pass', function () {
             return true;
         });
-        $this->fail_pulse->add('This test should fail', function() {
+        $this->pulseFail->add('This test should fail', function () {
             return false;
         });
 
-        $this->success_pulse = new Pulse();
+        $this->pulseSuccess = new Pulse();
 
-        $this->success_pulse->addWarning('This test should fail', function () {
+        $this->pulseSuccess->addWarning('This test should fail', function () {
             return false;
         });
-        $this->success_pulse->add('This test should pass', function() {
+        $this->pulseSuccess->add('This test should pass', function () {
             return true;
         });
-        $this->success_pulse->add('This test should also pass', function() {
+        $this->pulseSuccess->add('This test should also pass', function () {
             return true;
         });
     }
@@ -45,19 +49,19 @@ class FormatterTest extends PHPUnit\Framework\TestCase
     {
         $expected = '{"all-passing":false,"healthchecks":[{"description":"Description","type":"info","data":"this is some data"},{"description":"This is a warning","type":"warning","passing":false},{"description":"This test should pass","type":"critical","passing":true},{"description":"This test should fail","type":"critical","passing":false}]}';
 
-        $this->assertEquals($expected, Formatter::toJson($this->fail_pulse));
+        self::assertEquals($expected, Formatter::toJson($this->pulseFail));
     }
 
     public function testToJsonSuccess()
     {
         $expected = '{"all-passing":true,"healthchecks":[{"description":"This test should fail","type":"warning","passing":false},{"description":"This test should pass","type":"critical","passing":true},{"description":"This test should also pass","type":"critical","passing":true}]}';
 
-        $this->assertEquals($expected, Formatter::toJson($this->success_pulse));
+        self::assertEquals($expected, Formatter::toJson($this->pulseSuccess));
     }
 
     public function testToHtml()
     {
-        $expected = <<<HEREDOC
+        $expected = <<<HTML
 <!DOCTYPE html>
 <html>
 <head>
@@ -125,14 +129,14 @@ class FormatterTest extends PHPUnit\Framework\TestCase
         </div>
     </div>
 </body>
-HEREDOC;
+HTML;
 
-        $this->assertEquals($expected, Formatter::toHtml($this->fail_pulse));
+        self::assertEquals($expected, Formatter::toHtml($this->pulseFail));
     }
 
     public function testToPlainFailure()
     {
-        $expected = <<<HEREDOC
+        $expected = <<<TEXT
 Description (info): this is some data
 This is a warning (warning): fail
 This test should pass (critical): pass
@@ -140,53 +144,53 @@ This test should fail (critical): fail
 
 Healthcheck summary: fail
 
-HEREDOC;
+TEXT;
 
-        $this->assertEquals($expected, Formatter::toPlain($this->fail_pulse));
+        self::assertEquals($expected, Formatter::toPlain($this->pulseFail));
     }
 
     public function testToPlainSuccess()
     {
-        $expected = <<<HEREDOC
+        $expected = <<<TEXT
 This test should fail (warning): fail
 This test should pass (critical): pass
 This test should also pass (critical): pass
 
 Healthcheck summary: pass
 
-HEREDOC;
+TEXT;
 
-        $this->assertEquals($expected, Formatter::toPlain($this->success_pulse));
+        self::assertEquals($expected, Formatter::toPlain($this->pulseSuccess));
     }
 
     public function testIsBrowser()
     {
         $_SERVER['HTTP_USER_AGENT'] = 'Opera/9.80 (Android 4.0.4; Linux; Opera Mobi/ADR-1301080958) Presto/2.11.355 Version/12.10';
-        $this->assertTrue(Formatter::isBrowser());
+        self::assertTrue(Formatter::isBrowser());
 
         $_SERVER['HTTP_USER_AGENT'] = 'Java/1.6.0_22';
-        $this->assertFalse(Formatter::isBrowser());
+        self::assertFalse(Formatter::isBrowser());
 
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; nl-NL) AppleWebKit/533.19.4 (KHTML, like Gecko) AdobeAIR/3.1';
-        $this->assertTrue(Formatter::isBrowser());
+        self::assertTrue(Formatter::isBrowser());
 
         unset($_SERVER['HTTP_USER_AGENT']);
-        $this->assertFalse(Formatter::isBrowser());
+        self::assertFalse(Formatter::isBrowser());
     }
 
     public function testAcceptsJson()
     {
         $_SERVER['HTTP_ACCEPT'] = 'text/html';
-        $this->assertFalse(Formatter::acceptsJson());
+        self::assertFalse(Formatter::acceptsJson());
 
         $_SERVER['HTTP_ACCEPT'] = 'application/json';
-        $this->assertTrue(Formatter::acceptsJson());
+        self::assertTrue(Formatter::acceptsJson());
 
         // Technically this is not compliant, but we'll accept it anyway.
         $_SERVER['HTTP_ACCEPT'] = 'text/html; Application/JSON';
-        $this->assertTrue(Formatter::acceptsJson());
+        self::assertTrue(Formatter::acceptsJson());
 
         unset($_SERVER['HTTP_ACCEPT']);
-        $this->assertFalse(Formatter::acceptsJson());
+        self::assertFalse(Formatter::acceptsJson());
     }
 }

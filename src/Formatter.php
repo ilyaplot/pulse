@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ilyaplot\Pulse;
+namespace ilyaplot\pulse;
 
 class Formatter
 {
@@ -12,7 +12,7 @@ class Formatter
 
         $temp = ['all-passing' => $pulse->getStatus(), 'healthchecks' => []];
 
-        foreach ($pulse->getHealthchecks() as $healthcheck) {
+        foreach ($pulse->getHealthChecks() as $healthcheck) {
             $temp_array = [
                 'description' => $healthcheck->getDescription(),
                 'type' => $healthcheck->getType(),
@@ -47,7 +47,7 @@ class Formatter
         // We'll do this first since it's less volatile
         $output = str_replace('%summary%', static::htmlSummary($pulse->getStatus()), $output);
 
-        foreach ($pulse->getHealthchecks() as $healthcheck) {
+        foreach ($pulse->getHealthChecks() as $healthcheck) {
             $checks .= static::htmlHealthcheck($healthcheck);
         }
 
@@ -74,7 +74,7 @@ class Formatter
 
         $temp = '';
 
-        foreach ($pulse->getHealthchecks() as $healthcheck) {
+        foreach ($pulse->getHealthChecks() as $healthcheck) {
             $temp .= $healthcheck->getDescription() . ' (' . $healthcheck->getType() . '): ' . self::statusToStr($healthcheck->getStatus()) . PHP_EOL;
         }
 

@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace ilyaplot\Pulse;
+namespace ilyaplot\pulse;
+
+use Closure;
 
 class Pulse
 {
-    private $healthchecks = [];
+    private array $healthChecks = [];
 
     /**
      * Convenience function for adding simple healthchecks. Note: These default to
@@ -15,7 +17,7 @@ class Pulse
      * @param string  $description A description of this check
      * @param Closure $healthcheck A callable that returns true when the check passes, false on failure
      */
-    public function add($description, \Closure $healthcheck)
+    public function add(string $description, Closure $healthcheck): void
     {
         $this->addCritical($description, $healthcheck);
     }
@@ -23,25 +25,25 @@ class Pulse
     /**
      * Add a warning. If this healthcheck fails Pulse will respond with a 200, but will indicate errors.
      */
-    public function addWarning($description, \Closure $healthcheck)
+    public function addWarning(string $description, Closure $healthcheck): void
     {
-        $this->healthchecks[] = new Healthcheck($description, $healthcheck, Healthcheck::WARNING);
+        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::WARNING);
     }
 
     /**
      * Add a critical healthcheck. If this healthcheck fails Pulse will respond with a 503.
      */
-    public function addCritical($description, \Closure $healthcheck)
+    public function addCritical(string $description, Closure $healthcheck): void
     {
-        $this->healthchecks[] = new Healthcheck($description, $healthcheck, Healthcheck::CRITICAL);
+        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::CRITICAL);
     }
 
     /**
      * Add an informational message to the healthcheck list. The return value will be displayed vertabim.
      */
-    public function addInfo($description, \Closure $healthcheck)
+    public function addInfo(string $description, Closure $healthcheck): void
     {
-        $this->healthchecks[] = new Healthcheck($description, $healthcheck, Healthcheck::INFO);
+        $this->healthChecks[] = new Healthcheck($description, $healthcheck, Healthcheck::INFO);
     }
 
     /**
@@ -50,9 +52,9 @@ class Pulse
      *
      * @param Healthcheck $healthcheck
      */
-    public function addHealthcheck(Healthcheck $healthcheck)
+    public function addHealthcheck(Healthcheck $healthcheck): void
     {
-        $this->healthchecks[] = $healthcheck;
+        $this->healthChecks[] = $healthcheck;
     }
 
     /**
@@ -60,11 +62,11 @@ class Pulse
      *
      * @return bool true if all tests pass, false otherwise
      */
-    public function getStatus()
+    public function getStatus(): bool
     {
         $status = true;
 
-        foreach ($this->healthchecks as $healthcheck) {
+        foreach ($this->healthChecks as $healthcheck) {
             // Shortcut the rest if any check fails
             if ($status && $healthcheck->getType() === Healthcheck::CRITICAL) {
                 $status = $status && $healthcheck->getStatus();
@@ -77,15 +79,15 @@ class Pulse
     /**
      * @return array List of all healthchecks currently registered
      */
-    public function getHealthchecks()
+    public function getHealthChecks(): array
     {
-        return $this->healthchecks;
+        return $this->healthChecks;
     }
 
     /**
      * Evaluate all healthchecks and output a summary, using Formatter->autoexec()
      */
-    public function check()
+    public function check(): void
     {
         Formatter::autoexec($this);
     }

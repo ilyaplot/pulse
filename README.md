@@ -34,7 +34,7 @@ Healthchecks are critical by default, which means that the healthcheck page will
 Here's an example implementation of `healthcheck.php` that checks connectivity to memcache:
 
 ```php
-$pulse = new ilyaplot\Pulse\Pulse();
+$pulse = new ilyaplot\pulse\Pulse();
 
 $pulse->add("Check that config file is readable", function(){
 	return is_readable('/path/to/your/config/file');
