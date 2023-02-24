@@ -6,7 +6,6 @@ Pulse allows you to easily write healthchecks for your application and display a
 [![Total Downloads](https://poser.pugx.org/ilyaplot/pulse/downloads.png)](https://packagist.org/packages/ilyaplot/pulse)
 [![Build status](https://github.com/ilyaplot/pulse/workflows/build/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3Abuild)
 [![Code Coverage](https://codecov.io/gh/ilyaplot/pulse/branch/master/graph/badge.svg)](https://codecov.io/gh/ilyaplot/pulse)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Fvalidator%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/ilyaplot/pulse/master)
 [![type-coverage](https://shepherd.dev/github/ilyaplot/pulse/coverage.svg)](https://shepherd.dev/github/ilyaplot/pulse)
 [![static analysis](https://github.com/ilyaplot/pulse/workflows/static%20analysis/badge.svg)](https://github.com/ilyaplot/pulse/actions?query=workflow%3A%22static+analysis%22)
 [![psalm-level](https://shepherd.dev/github/ilyaplot/pulse/level.svg)](https://shepherd.dev/github/ilyaplot/pulse)
