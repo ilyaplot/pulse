@@ -27,15 +27,6 @@ class FileRuleTest extends TestCase
         unlink($this->notWritableReadableFile);
     }
 
-    /**
-     * protected readonly bool $checkExists = true,
-     * protected readonly bool $checkReadable = false,
-     * protected readonly bool $checkWriteable = false,
-     * protected readonly bool $checkIsFile = false,
-     * protected readonly bool $checkIsDirectory = false,
-     * protected readonly bool $checkExecutable = false,
-     */
-
     public function testSuccess(): void
     {
         $rule = new FileRule(__FILE__);
