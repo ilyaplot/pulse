@@ -24,7 +24,7 @@
             <directory suffix=".php">src</directory>
         </include>
         <exclude>
-            <directory>src/formatters/html-template.php</directory>
+            <file>src/formatters/html-template.php</file>
         </exclude>
     </coverage>
 </phpunit>

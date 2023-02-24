@@ -27,7 +27,7 @@ class RuleResultDtoTest extends TestCase
             false,
             'Rule 2',
             LevelEnum::critical,
-            "Second rule"
+            'Second rule'
         );
 
         self::assertEquals(

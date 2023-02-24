@@ -12,6 +12,30 @@ use PHPUnit\Framework\TestCase;
  */
 class FileRuleTest extends TestCase
 {
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private string $notWritableReadableFile;
+
+    protected function setUp(): void
+    {
+        $this->notWritableReadableFile = tempnam(sys_get_temp_dir(), 'readonly')
+            ?: throw new Exception('Cannot create temp file');
+        chmod($this->notWritableReadableFile, 0111);
+    }
+
+    protected function tearDown(): void
+    {
+        unlink($this->notWritableReadableFile);
+    }
+
+    /**
+     * protected readonly bool $checkExists = true,
+     * protected readonly bool $checkReadable = false,
+     * protected readonly bool $checkWriteable = false,
+     * protected readonly bool $checkIsFile = false,
+     * protected readonly bool $checkIsDirectory = false,
+     * protected readonly bool $checkExecutable = false,
+     */
+
     public function testSuccess(): void
     {
         $rule = new FileRule(__FILE__);
@@ -51,7 +75,7 @@ class FileRuleTest extends TestCase
             __FILE__,
             checkIsDirectory: true,
         );
-        self::assertEquals(false, $rule->getStatus());
+        self::assertFalse($rule->getStatus());
     }
 
     public function testDirectoryIsFile(): void
@@ -60,7 +84,7 @@ class FileRuleTest extends TestCase
             __DIR__,
             checkIsFile: true,
         );
-        self::assertEquals(false, $rule->getStatus());
+        self::assertFalse($rule->getStatus());
     }
 
     public function testIsExecutable(): void
@@ -69,6 +93,25 @@ class FileRuleTest extends TestCase
             __FILE__,
             checkExecutable: true,
         );
-        self::assertEquals(false, $rule->getStatus());
+        self::assertFalse($rule->getStatus());
+    }
+
+    public function testIsReadable(): void
+    {
+        $rule = new FileRule(
+            $this->notWritableReadableFile,
+            checkExists: false,
+            checkReadable: true,
+        );
+        self::assertFalse($rule->getStatus());
+    }
+
+    public function testIsWriteable(): void
+    {
+        $rule = new FileRule(
+            $this->notWritableReadableFile,
+            checkWriteable: true,
+        );
+        self::assertFalse($rule->getStatus());
     }
 }
