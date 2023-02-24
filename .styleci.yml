@@ -80,4 +80,3 @@ enabled:
   - empty_loop_body_braces
   - integer_literal_case
   - union_type_without_spaces
-  - function_declaration
