@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ilyaplot\pulse;
 
+use AssertionError;
 use ilyaplot\pulse\rules\RuleInterface;
 
 class Pulse
@@ -44,6 +45,9 @@ class Pulse
         $this->add($rule);
     }
 
+    /**
+     * @throws AssertionError
+     */
     public function run(LevelEnum $successLevel = LevelEnum::warning): ResultDto
     {
         foreach ($this->rules as $rule) {
