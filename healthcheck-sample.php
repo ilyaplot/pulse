@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$pulse = new cbednarski\Pulse\Pulse();
+$pulse = new ilyaplot\Pulse\Pulse();
 
 $pulse->add('This is a critical check that is passing', function(){
     return true;

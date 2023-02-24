@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
-use cbednarski\Pulse\Healthcheck;
+use ilyaplot\Pulse\Healthcheck;
 
 class HealthcheckTest extends PHPUnit_Framework_TestCase
 {

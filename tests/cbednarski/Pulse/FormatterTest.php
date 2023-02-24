@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
-use cbednarski\Pulse\Pulse as Pulse;
-use cbednarski\Pulse\Formatter as Formatter;
+use ilyaplot\Pulse\Pulse as Pulse;
+use ilyaplot\Pulse\Formatter as Formatter;
 
 class FormatterTest extends PHPUnit_Framework_TestCase
 {

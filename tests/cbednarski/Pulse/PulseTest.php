@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/../../../vendor/autoload.php');
 
-use cbednarski\Pulse\Pulse;
-use cbednarski\Pulse\Healthcheck;
+use ilyaplot\Pulse\Pulse;
+use ilyaplot\Pulse\Healthcheck;
 
 class PulseTest extends PHPUnit_Framework_TestCase
 {

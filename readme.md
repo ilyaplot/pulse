@@ -2,8 +2,8 @@
 
 Pulse allows you to easily write healthchecks for your application and display a simple, aggregated report so you can quickly diagnose whether and why your app is having trouble (or whether you can blame someone else). You can also monitor your healthchecks with [nagios](http://www.nagios.org/), [zabbix](http://www.zabbix.com/), etc.
 
-[![Build Status](https://travis-ci.org/cbednarski/pulse.png)]
-(https://travis-ci.org/cbednarski/pulse)
+[![Build Status](https://travis-ci.org/ilyaplot/pulse.png)]
+(https://travis-ci.org/ilyaplot/pulse)
 
 #### Wait, what's a healthcheck?
 
@@ -17,7 +17,7 @@ You can install this into your project using [composer](http://getcomposer.org/d
 {
     "require": {
         "php": ">=5.3.0",
-        "cbednarski/Pulse": "1.0.*"
+        "ilyaplot/Pulse": "1.0.*"
     }
 }
 ```
@@ -33,7 +33,7 @@ Healthchecks are critical by default, which means that the healthcheck page will
 Here's an example implementation of `healthcheck.php` that checks connectivity to memcache:
 
 ```php
-$pulse = new cbednarski\Pulse\Pulse();
+$pulse = new ilyaplot\Pulse\Pulse();
 
 $pulse->add("Check that config file is readable", function(){
 	return is_readable('/path/to/your/config/file');

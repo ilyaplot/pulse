@@ -1,6 +1,6 @@
 <?php
 
-namespace cbednarski\Pulse;
+namespace ilyaplot\Pulse;
 
 class Formatter
 {
