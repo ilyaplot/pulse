@@ -33,7 +33,7 @@ For non-critical checks you can use a warning and you'll get status 200 even if 
 
 ```php
 $pulse->addWarning(new ClosureRule(
-    fn() => (new YoutubeClient())->->isUp(),
+    fn() => (new YoutubeClient())->isUp(),
     "Verify connectivity to youtube",
     LevelEnum::warning,
 ));
@@ -43,7 +43,7 @@ $pulse->addWarning(new ClosureRule(
 
 ```php
 $pulse->addInfo(new ClosureRule(
-    fn() => (new YoutubeClient())->->isUp(),
+    fn() => (new YoutubeClient())->isUp(),
     "Verify connectivity to youtube", 
 ));
 
